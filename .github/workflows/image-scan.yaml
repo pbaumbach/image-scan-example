@@ -45,6 +45,9 @@ jobs:
          container_tag: "${{ env.CONTAINER_TAG }}"
          crowdstrike_region: "${{ env.FALCON_CLOUD_REGION }}"
 #         crowdstrike_score: 500
+      env:
+         FALCON_CLIENT_ID: "${{ secrets.FALCON_CLIENT_ID }}"
+         FALCON_CLIENT_SECRET: "${{ secrets.FALCON_CLIENT_SECRET }}"
          
     - name: Push docker image
       run: docker push "${{ env.CONTAINER_REPO }}:${{ env.CONTAINER_TAG }}"
