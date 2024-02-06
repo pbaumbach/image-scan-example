@@ -40,14 +40,14 @@ jobs:
     - name: Scan Container Image from Repository
       uses: CrowdStrike/container-image-scan-action@main
       id: image-scan
-      with:
+#      with:
+#         crowdstrike_score: 500
+      env:
+        FALCON_CLIENT_SECRET: "${{ secrets.FALCON_CLIENT_SECRET }}"
         container_repository: "${{ env.CONTAINER_REPOSITORY }}"
         container_tag: "${{ env.CONTAINER_TAG }}"
         crowdstrike_region: "${{ env.FALCON_CLOUD_REGION }}"
         FALCON_CLIENT_ID: "${{ secrets.FALCON_CLIENT_ID }}"
-#         crowdstrike_score: 500
-      env:
-        FALCON_CLIENT_SECRET: "${{ secrets.FALCON_CLIENT_SECRET }}"
          
     - name: Push docker image
       run: docker push "${{ env.CONTAINER_REPO }}:${{ env.CONTAINER_TAG }}"
