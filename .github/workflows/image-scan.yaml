@@ -49,6 +49,7 @@ jobs:
       env:
         FALCON_CLIENT_SECRET: ${{ secrets.FALCON_CLIENT_SECRET }}
         FALCON_CLIENT_ID: ${{ secrets.FALCON_CLIENT_ID }}
+        JSON_REPORT: /tmp/report.json
          
     - name: Push docker image
       run: docker push "${{ env.CONTAINER_REPO }}:${{ env.CONTAINER_TAG }}"
