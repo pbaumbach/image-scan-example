@@ -10,7 +10,7 @@ on:
 env:
   GITHUB_SHA: ${{ github.sha }}
   FALCON_CLOUD_REGION: us-1
-  CONTAINER_REPO: quay.io/crowdstrike/detection-container
+  CONTAINER_REPO: sagikazarmark/dvwa
   CONTAINER_TAG: latest
 #  CONTAINER_TAG: ${{ github.run_id }}
 
