@@ -8,11 +8,11 @@ on:
     branches: [ main ]
     
 env:
-#  FALCON_CLIENT_SECRET: ${{ secrets.FALCON_CLIENT_SECRET }}
-#  FALCON_CLIENT_ID: ${{ secrets.FALCON_CLIENT_ID }}
+  GITHUB_SHA: ${{ github.sha }}
   FALCON_CLOUD_REGION: us-1
   CONTAINER_REPO: pbaumbach/detection-container
-  CONTAINER_TAG: ${{ github.run_id }}
+  CONTAINER_TAG: latest
+#  CONTAINER_TAG: ${{ github.run_id }}
 
 jobs:
 
@@ -24,25 +24,24 @@ jobs:
     
     - name: Checkout
       uses: actions/checkout@v4
-    
-    - name: Echo Secrets for Test
+
+#    - name: Docker Login
+#      uses: docker/login-action@v3
+#      with:
+#        username: ${{ secrets.DOCKER_USER }}
+#        password: ${{ secrets.DOCKER_PASSWORD }}
+
+#    - name: Build and push Docker images
+#      uses: docker/build-push-action@v5
+#      with:
+#        context: '.'
+#        push: false
+#        load: true
+#        tags: "${{ env.CONTAINER_REPO }}:${{ env.CONTAINER_TAG }}"
+
+    - name: Docker build & tag image
       run: |
-        echo "client id: "${{ secrets.FALCON_CLIENT_ID }}
-        echo "docker user: "username: ${{ secrets.DOCKER_USER }}
-
-    - name: Docker Login
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_USER }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
-    - name: Build and push Docker images
-      uses: docker/build-push-action@v5
-      with:
-        context: '.'
-        push: false
-        load: true
-        tags: "${{ env.CONTAINER_REPO }}:${{ env.CONTAINER_TAG }}"
+        docker build -t $CONTAINER_REPO:latest -t $CONTAINER_REPO:latest .
     
     - name: Scan Container Image from Repository
       uses: CrowdStrike/container-image-scan-action@main
