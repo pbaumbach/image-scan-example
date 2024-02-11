@@ -41,7 +41,7 @@ jobs:
 
     - name: Docker build & tag image
       run: |
-        docker build -t $CONTAINER_REPO:latest -t $CONTAINER_REPO:latest .
+        docker build -t $CONTAINER_REPO:latest -t $CONTAINER_REPO:${{ env.CONTAINER_TAG }} .
     
     - name: Scan Container Image from Repository
       uses: CrowdStrike/container-image-scan-action@main
