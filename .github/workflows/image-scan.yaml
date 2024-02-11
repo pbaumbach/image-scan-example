@@ -11,7 +11,7 @@ env:
   GITHUB_SHA: ${{ github.sha }}
   FALCON_CLOUD_REGION: us-1
   CONTAINER_REPO: quay.io/slukasik/vulnapp
-  CONTAINER_TAG: 3
+  CONTAINER_TAG: 5
 #  CONTAINER_TAG: ${{ github.run_id }}
 
 jobs:
@@ -39,9 +39,14 @@ jobs:
 #        load: true
 #        tags: "${{ env.CONTAINER_REPO }}:${{ env.CONTAINER_TAG }}"
 
-    - name: Docker build & tag image
+    # - name: Docker build & tag image
+    #   run: |
+    #     docker build -t $CONTAINER_REPO:latest -t $CONTAINER_REPO:${{ env.CONTAINER_TAG }} .
+    
+    - name: Docker pull & tag image
       run: |
-        docker build -t $CONTAINER_REPO:latest -t $CONTAINER_REPO:${{ env.CONTAINER_TAG }} .
+        docker pull $CONTAINER_REPO:latest
+        docker tag $CONTAINER_REPO:latest $CONTAINER_REPO:${{ env.CONTAINER_TAG }} .
     
     - name: Scan Container Image from Repository
       uses: CrowdStrike/container-image-scan-action@main
